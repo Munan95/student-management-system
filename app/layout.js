@@ -1,6 +1,5 @@
 import "./globals.css";
-import Sidebar from "@/components/Sidebar";
-import Navbar from "@/components/Navbar";
+import AppShell from "@/components/AppShell";
 
 export const metadata = {
   title: "Student Management System",
@@ -11,13 +10,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className="min-h-screen bg-white text-slate-900 antialiased">
-        <div className="flex min-h-screen">
-          <Sidebar />
-          <div className="flex min-w-0 flex-1 flex-col">
-            <Navbar />
-            <div className="flex-1 bg-white">{children}</div>
-          </div>
-        </div>
+        <AppShell>{children}</AppShell>
       </body>
     </html>
   );
