@@ -1,6 +1,6 @@
-export default function Header() {
+export default function Navbar() {
   return (
-    <header className="fixed top-0 left-0 z-50 flex h-16 w-full items-center justify-between border-b border-slate-300 bg-white px-6 shadow-sm">
+    <nav className="sticky top-0 z-50 flex h-16 w-700 items-center justify-between border-b border-slate-200 rounded-xl m-3 bg-white px-6 shadow-md">
       <h1 className="text-xl font-semibold">Student Management System</h1>
       <div className="flex items-center gap-4">
         <div className="flex items-center gap-2">
@@ -16,6 +16,6 @@ export default function Header() {
           Logout
         </button>
       </div>
-    </header>
+    </nav>
   );
 };
