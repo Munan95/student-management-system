@@ -1,6 +1,6 @@
 import "./globals.css";
 import Sidebar from "@/components/Sidebar";
-import Header from "@/components/Navbar";
+import Navbar from "@/components/Navbar";
 
 export const metadata = {
   title: "Student Management System",
@@ -14,7 +14,7 @@ export default function RootLayout({ children }) {
         <div className="flex min-h-screen">
           <Sidebar />
           <div className="flex min-w-0 flex-1 flex-col">
-            <Header />
+            <Navbar />
             <div className="flex-1 bg-white">{children}</div>
           </div>
         </div>
