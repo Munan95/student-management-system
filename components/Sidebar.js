@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import SidebarIcon from "@/components/SidebarIcon";
 
 const items = [
   { label: "Dashboard", href: "/", icon: "📊" },
@@ -11,7 +12,7 @@ const items = [
   { label: "Marks", href: "/marks", icon: "📝" },
 ];
 
-export default function Sidebar({ open }) {
+export default function Sidebar({ onToggleSidebar }) {
   const pathname = usePathname();
 
   return (
@@ -21,8 +22,16 @@ export default function Sidebar({ open }) {
     >
       {/* fixed-width inner box so text doesn't wrap while the sidebar animates */}
       <div className="w-56">
-        <div className="flex h-16 items-center border-b border-slate-300 px-6 shadow-md">
+        <div className="flex h-16 items-center justify-between border-b border-slate-300 px-6 shadow-md">
           <span className="text-xl font-semibold">Menu</span>
+          <button
+            type="button"
+            onClick={onToggleSidebar}
+            aria-label="Close sidebar"
+            className="rounded-md p-2 text-slate-700 hover:bg-slate-100"
+          >
+            <SidebarIcon />
+          </button>
         </div>
         <nav className="mt-10 space-y-5 px-3">
           {items.map((item) => {
