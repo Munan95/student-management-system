@@ -1,36 +1,57 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Student Management System
 
-## Getting Started
+A CRUD app built with **Next.js (App Router)**, **Tailwind CSS**, **MongoDB** and **Mongoose**.
 
-First, run the development server:
+Each student has: **Name, Email, Phone, Department**.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+## Setup
+
+1. Install dependencies:
+   ```bash
+   npm install
+   ```
+2. Make sure MongoDB is running locally, or use a MongoDB Atlas connection string.
+3. Check `.env.local`:
+   ```
+   MONGODB_URI=mongodb://127.0.0.1:27017/student_management
+   ```
+4. Start the dev server:
+   ```bash
+   npm run dev
+   ```
+5. (Optional) Load sample students, courses and marks for the dashboard:
+   ```bash
+   npm run seed
+   ```
+6. Open http://localhost:3000 (Dashboard). Students are at http://localhost:3000/students
+
+## API
+
+| Method | Endpoint             | Action                |
+| ------ | -------------------- | --------------------- |
+| GET    | `/api/students`      | List all students     |
+| POST   | `/api/students`      | Create a student      |
+| GET    | `/api/students/:id`  | Get one student       |
+| PUT    | `/api/students/:id`  | Update a student      |
+| DELETE | `/api/students/:id`  | Delete a student      |
+| GET / POST | `/api/courses`       | List (with student counts) / create course |
+| PUT / DELETE | `/api/courses/:id` | Update / delete a course |
+| GET / POST | `/api/marks`         | List / create marks   |
+| PUT / DELETE | `/api/marks/:id`   | Update / delete marks |
+| GET `?date=YYYY-MM-DD` | `/api/attendance` | Attendence for a date |
+| POST   | `/api/attendance`    | Save attendence for a date (`{ date, records }`) |
+
+## Structure
+
 ```
-
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+app/
+  api/students/route.js        # GET all, POST
+  api/students/[id]/route.js   # GET one, PUT, DELETE
+  layout.js, page.js, globals.css
+components/
+  StudentManager.js            # state + API calls
+  StudentForm.js               # add / edit form
+  StudentTable.js              # list with Edit / Delete
+lib/mongodb.js                 # cached Mongoose connection
+models/Student.js              # Mongoose schema & model
+```
