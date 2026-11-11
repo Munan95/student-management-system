@@ -1,10 +1,24 @@
+import Image from "next/image";
+
 export default function Header() {
   return (
     <header className="sticky top-0 z-50 flex h-16 w-367 items-center justify-between border-b rounded-xl m-2 border-slate-300 bg-white px-6 shadow-md">
-      <h1 className="text-2xl font-bold">EduDash</h1>
+      
+      <div className="flex gap-1 items-center justify-center">
+        <Image
+              src="/EduDash Learning Emblem.png"
+              alt="app-logo"
+              width={9}
+              height={9}
+              priority
+              className="h-9 w-9 rounded-full"
+            />
+        <h1 className="text-2xl font-bold text-slate-700">EduDash</h1>
+      </div>
+      
       <div className="flex items-center gap-4">
         <div className="flex items-center gap-2">
-          <span className="flex h-8 w-8 items-center justify-center rounded-full bg-black text-sm font-semibold text-white">
+          <span className="flex h-8 w-8 items-center justify-center rounded-full bg-black text-sm font-semibold text-white/90">
             AR
           </span>
           <span className="text-base text-slate-700">Admin</span>
@@ -16,6 +30,7 @@ export default function Header() {
           Logout
         </button>
       </div>
+
     </header>
   );
 };
