@@ -2,13 +2,14 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { House,GraduationCap,List,CalendarCheck,SquarePen } from "lucide-react";
 
 const items = [
-  { label: "Dashboard", href: "/", icon: "📊" },
-  { label: "Students", href: "/students", icon: "👥" },
-  { label: "Courses", href: "/courses", icon: "📚" },
-  { label: "Attendance", href: "/attendance", icon: "✅" },
-  { label: "Marks", href: "/marks", icon: "📝" },
+  { label: "Dashboard", href: "/", icon: House },
+  { label: "Students", href: "/students", icon: GraduationCap },
+  { label: "Courses", href: "/courses", icon: List },
+  { label: "Attendance", href: "/attendance", icon: CalendarCheck },
+  { label: "Marks", href: "/marks", icon: SquarePen },
 ];
 
 export default function Sidebar({ open }) {
@@ -22,10 +23,11 @@ export default function Sidebar({ open }) {
       {/* fixed-width inner box so text doesn't wrap while the sidebar animates */}
       <div className="w-56">
         <div className="flex h-16 items-center border-b border-slate-300 px-6 shadow-md">
-          <span className="text-2xl font-bold">Menu</span>
+          <span className="text-slate-700 text-2xl font-bold">Menu</span>
         </div>
         <nav className="mt-10 space-y-5 px-3">
           {items.map((item) => {
+            const Icon = item.icon;
             const active =
               item.href === "/"
                 ? pathname === "/"
@@ -35,13 +37,12 @@ export default function Sidebar({ open }) {
               <Link
                 key={item.href}
                 href={item.href}
-                className={`flex items-center gap-3 whitespace-nowrap rounded-md px-4 py-3 text-sm font-semibold transition ${
-                  active
-                    ? "border-r-4 border-teal-500 bg-teal-200 text-slate-900"
-                    : "text-slate-900 hover:bg-slate-100"
-                }`}
+                className={`flex items-center gap-3 whitespace-nowrap rounded-md px-4 py-3 text-sm font-semibold transition ${active
+                    ? "border-r-4 border-teal-500 bg-teal-200 text-slate-600"
+                    : "text-slate-600 hover:bg-slate-100"
+                  }`}
               >
-                <span className="text-base">{item.icon}</span>
+                <Icon strokeWidth={2} className="size-5" />
                 {item.label}
               </Link>
             );
