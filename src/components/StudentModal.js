@@ -13,7 +13,7 @@ const EMPTY = {
 };
 
 const inputClass =
-  "w-full rounded-md border border-slate-300 px-3 py-2 text-sm outline-none transition focus:border-blue-500 focus:ring-2 focus:ring-blue-200";
+  "w-full rounded-md border border-slate-300 px-3 py-2 text-sm outline-none transition focus:border-teal-500 focus:ring-2 focus:ring-teal-200";
 
 export default function StudentModal({ initial, saving, error, onSubmit, onClose }) {
   const isEdit = Boolean(initial);
@@ -50,12 +50,12 @@ export default function StudentModal({ initial, saving, error, onSubmit, onClose
         onClick={(e) => e.stopPropagation()}
         className="max-h-[90vh] w-full max-w-lg overflow-y-auto rounded-xl bg-white p-6 shadow-xl"
       >
-        <h2 className="mb-5 text-lg font-semibold">
+        <h2 className="mb-5 text-lg font-semibold text-slate-700">
           {isEdit ? "Edit Student" : "Add New Student"}
         </h2>
 
         {error && (
-          <div className="mb-4 rounded-md border border-red-200 bg-red-50 px-3 py-2 text-sm text-red-700">
+          <div className="mb-4 rounded-md border border-rose-200 bg-red-50 px-3 py-2 text-sm text-rose-700">
             {error}
           </div>
         )}
@@ -98,14 +98,14 @@ export default function StudentModal({ initial, saving, error, onSubmit, onClose
           <button
             type="button"
             onClick={onClose}
-            className="rounded-md border border-slate-300 px-5 py-2 text-sm font-medium hover:bg-slate-100"
+            className="rounded-md border border-slate-300 px-5 py-2 text-sm text-slate-700 font-medium hover:bg-slate-100"
           >
             Cancel
           </button>
           <button
             type="submit"
             disabled={saving}
-            className="rounded-md bg-blue-600 px-5 py-2 text-sm font-medium text-white hover:bg-blue-700 disabled:opacity-60"
+            className="rounded-md bg-teal-600 px-5 py-2 text-sm font-medium text-white hover:bg-teal-700 disabled:opacity-60"
           >
             {saving ? "Saving..." : isEdit ? "Update Student" : "Add Student"}
           </button>

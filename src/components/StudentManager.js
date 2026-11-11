@@ -97,14 +97,14 @@ export default function StudentManager() {
     <div>
       <div className="flex flex-wrap items-start justify-between gap-4">
         <div>
-          <h2 className="text-2xl font-bold">Students</h2>
-          <p className="mt-3 text-lg">
+          <h2 className="text-3xl font-bold text-slate-700">Students</h2>
+          <p className="mt-3 text-lg text-slate-700">
             Manage student information({students.length} total)
           </p>
         </div>
 
         <div className="flex items-center gap-4">
-          <div className="flex rounded-md bg-slate-300 p-1 text-sm">
+          <div className="flex rounded-md bg-slate-300 p-1 text-sm text-slate-700">
             {["cards", "table"].map((v) => (
               <button
                 key={v}
@@ -119,7 +119,7 @@ export default function StudentManager() {
           </div>
           <button
             onClick={openAdd}
-            className="rounded-md bg-blue-600 px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-blue-700"
+            className="rounded-md bg-teal-600 px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-teal-700"
           >
             Add Student
           </button>
@@ -132,7 +132,7 @@ export default function StudentManager() {
         </div>
       )}
       {pageError && (
-        <div className="mt-5 rounded-md border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
+        <div className="mt-5 rounded-md border border-rose-200 bg-red-50 px-4 py-3 text-sm text-rose-700">
           {pageError}
         </div>
       )}
