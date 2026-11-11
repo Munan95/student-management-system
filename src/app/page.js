@@ -5,6 +5,7 @@ import connectDB from "../lib/mongodb";
 import Student from "../models/Student";
 import Course from "../models/Course";
 import Mark from "../models/Mark";
+import { GraduationCap,List } from "lucide-react";
 
 async function getDashboardData() {
   await connection();
@@ -37,14 +38,15 @@ async function getDashboardData() {
 };
 
 function StatCard({ label, value, icon, color }) {
+  const Icon = icon;
   return (
     <div className="flex items-center gap-4 rounded-md bg-white p-4 shadow-md ring-1 ring-slate-100">
       <div className={`flex h-14 w-14 items-center justify-center rounded-md text-2xl ${color}`}>
-        {icon}
+        <Icon strokeWidth={2} className="size-5" />
       </div>
       <div>
-        <p className="text-lg text-slate-800">{label}</p>
-        <p className="text-xl font-bold">{value}</p>
+        <p className="text-lg text-slate-700">{label}</p>
+        <p className="text-xl font-bold text-slate-800">{value}</p>
       </div>
     </div>
   );
@@ -74,14 +76,14 @@ async function DashboardContent() {
   return (
     <>
       <div className="mt-6 grid gap-6 md:grid-cols-2">
-        <StatCard label="Total Students" value={data.totalStudents} icon="👥" color="bg-blue-600" />
-        <StatCard label="Total Courses" value={data.totalCourses} icon="📚" color="bg-purple-500" />
+        <StatCard label="Total Students" value={data.totalStudents} icon={GraduationCap} color="bg-teal-500" />
+        <StatCard label="Total Courses" value={data.totalCourses} icon={List} color="bg-teal-500" />
       </div>
 
       <div className="mt-6 grid gap-6 lg:grid-cols-2">
         {/* Recent Students */}
         <section className="rounded-md bg-white p-6 shadow-md ring-1 ring-slate-100">
-          <h3 className="text-xl font-bold">Recent Students</h3>
+          <h3 className="text-xl font-bold text-slate-700">Recent Students</h3>
           <div className="mt-5 space-y-4">
             {data.recentStudents.length === 0 && (
               <p className="text-sm text-slate-500">No students yet.</p>
@@ -91,19 +93,19 @@ async function DashboardContent() {
               return (
                 <div
                   key={s.id}
-                  className="flex items-center justify-between rounded-md border-b-2 border-slate-400 bg-red-100 px-5 py-4 shadow"
+                  className="flex items-center justify-between rounded-md border-b-2 border-slate-400 bg-rose-100 px-5 py-4 shadow"
                 >
                   <div className="flex items-center gap-4">
-                    <span className="flex h-10 w-10 items-center justify-center rounded-full bg-blue-600 font-semibold text-white">
+                    <span className="flex h-10 w-10 items-center justify-center rounded-full bg-teal-600 font-semibold text-white">
                       {s.name.charAt(0).toUpperCase()}
                     </span>
                     <div>
-                      <p className="text-sm font-semibold">{s.name}</p>
+                      <p className="text-sm font-semibold text-slate-800">{s.name}</p>
                       <p className="text-sm text-slate-700">{s.department}</p>
                     </div>
                   </div>
                   <span
-                    className={`rounded-full px-4 py-1 text-xs ${active ? "bg-green-100 text-green-700" : "bg-red-300 text-red-700"
+                    className={`rounded-full px-4 py-1 text-xs ${active ? "bg-green-100 text-green-700" : "bg-rose-300 text-rose-700"
                       }`}
                   >
                     {active ? "Active" : "InActive"}
@@ -113,7 +115,7 @@ async function DashboardContent() {
             })}
           </div>
           <div className="mt-6 text-center">
-            <Link href="/students" className="text-sm font-medium text-blue-600 hover:underline">
+            <Link href="/students" className="text-sm font-medium text-teal-600 hover:underline">
               View All Students →
             </Link>
           </div>
@@ -121,7 +123,7 @@ async function DashboardContent() {
 
         {/* Recent Marks */}
         <section className="rounded-md bg-white p-6 shadow-md ring-1 ring-slate-100">
-          <h3 className="text-xl font-bold">Recent Marks</h3>
+          <h3 className="text-xl font-bold text-slate-700">Recent Marks</h3>
           <div className="mt-5 space-y-4">
             {data.recentMarks.length === 0 && (
               <p className="text-sm text-slate-500">
@@ -133,21 +135,21 @@ async function DashboardContent() {
               return (
                 <div
                   key={m.id}
-                  className="flex items-start justify-between rounded-md border-b-2 border-slate-300 bg-red-100 px-5 py-4 shadow"
+                  className="flex items-start justify-between rounded-md border-b-2 border-slate-300 bg-rose-100 px-5 py-4 shadow"
                 >
                   <div>
-                    <p className="text-sm font-semibold">{m.student}</p>
-                    <p className="mt-2 text-sm text-slate-800">
+                    <p className="text-sm font-semibold text-slate-800">{m.student}</p>
+                    <p className="mt-2 text-sm text-slate-700">
                       {m.subject}
                       {m.exam ? `-${m.exam}` : ""}
                     </p>
                   </div>
                   <div className="text-right">
-                    <p className="text-sm font-semibold">
+                    <p className="text-sm font-semibold text-slate-700">
                       {m.score}/{m.total}
                     </p>
                     <p
-                      className={`mt-2 text-sm ${pct >= 80 ? "text-green-500" : "text-red-400"
+                      className={`mt-2 text-sm ${pct >= 80 ? "text-green-500" : "text-rose-600"
                         }`}
                     >
                       {pct.toFixed(1)}%
@@ -158,7 +160,7 @@ async function DashboardContent() {
             })}
           </div>
           <div className="mt-6 text-center">
-            <Link href="/marks" className="text-sm font-medium text-blue-600 hover:underline">
+            <Link href="/marks" className="text-sm font-medium text-teal-600 hover:underline">
               View All Marks →
             </Link>
           </div>
@@ -170,9 +172,9 @@ async function DashboardContent() {
 
 export default function Dashboard() {
   return (
-    <main className="mx-6 my-6">
-      <h2 className="text-3xl font-bold">Dashboard</h2>
-      <p className="mt-2 text-2xl">Welcome to the Student Management System</p>
+    <main className="px-6 py-6 bg-slate-100">
+      <h2 className="text-3xl font-bold text-slate-700">Dashboard</h2>
+      <p className="mt-2 text-2xl text-slate-700">Welcome to the Student Management System</p>
 
       <Suspense fallback={<DashboardSkeleton />}>
         <DashboardContent />
