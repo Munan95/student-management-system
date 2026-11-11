@@ -41,8 +41,8 @@ function StatCard({ label, value, icon, color }) {
   const Icon = icon;
   return (
     <div className="flex items-center gap-4 rounded-md bg-white p-4 shadow-md ring-1 ring-slate-100">
-      <div className={`flex h-14 w-14 items-center justify-center rounded-md text-2xl ${color}`}>
-        <Icon strokeWidth={2} className="size-5" />
+      <div className={`flex h-14 w-14 items-center justify-center rounded-md text-xl ${color}`}>
+        <Icon strokeWidth={2} className="size-7" />
       </div>
       <div>
         <p className="text-lg text-slate-700">{label}</p>
