@@ -44,13 +44,13 @@ export default function StudentTable({ students, onEdit, onDelete }) {
                 <td className="whitespace-nowrap px-5 py-3 text-right">
                   <button
                     onClick={() => onEdit(s)}
-                    className="mr-2 rounded px-1 py-1 text-slate-600 hover:bg-slate-200"
+                    className="mr-2 rounded px-1 py-1 text-teal-400 hover:text-teal-500"
                   >
                     <SquarePen strokeWidth={2} className="size-5" />
                   </button>
                   <button
                     onClick={() => onDelete(s)}
-                    className="rounded px-1 py-1 text-slate-600 hover:bg-slate-200"
+                    className="rounded px-1 py-1 text-rose-400 hover:text-rose-500"
                   >
                     <Trash strokeWidth={2} className="size-5" />
                   </button>

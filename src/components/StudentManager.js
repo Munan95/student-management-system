@@ -98,7 +98,7 @@ export default function StudentManager() {
       <div className="flex flex-wrap items-start justify-between gap-4">
         <div>
           <h2 className="text-3xl font-bold text-slate-700">Students</h2>
-          <p className="mt-3 text-lg text-slate-700">
+          <p className="mt-2 text-lg text-slate-500">
             Manage student information({students.length} total)
           </p>
         </div>

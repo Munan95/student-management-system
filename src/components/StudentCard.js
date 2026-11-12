@@ -32,13 +32,13 @@ export default function StudentCard({ student, onEdit, onDelete }) {
       <div className="mt-4 flex justify-end gap-3">
         <button
           onClick={() => onEdit(student)}
-          className="rounded px-1 py-1 text-slate-600 transition hover:bg-slate-100"
+          className="rounded px-1 py-1 text-teal-400 transition hover:text-teal-500"
         >
           <SquarePen strokeWidth={2} className="size-5" />
         </button>
         <button
           onClick={() => onDelete(student)}
-          className="rounded px-1 py-1 text-slate-600 transition hover:bg-slate-100"
+          className="rounded px-1 py-1 text-rose-400 transition hover:text-rose-500"
         >
           <Trash strokeWidth={2} className="size-5" />
         </button>

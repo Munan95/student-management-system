@@ -145,7 +145,7 @@ export default function MarkManager() {
       <div className="flex items-start justify-between gap-4">
         <div>
           <h2 className="text-3xl font-bold text-slate-700">Marks</h2>
-          <p className="mt-1 text-lg text-slate-700">Manage student marks and grades</p>
+          <p className="mt-1 text-lg text-slate-500">Manage student marks and grades</p>
         </div>
         <button
           onClick={() => {

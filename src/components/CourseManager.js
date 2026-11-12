@@ -115,9 +115,9 @@ export default function CourseManager() {
   return (
     <div>
       <div className="flex items-start justify-between gap-4">
-        <div className="text-slate-700">
-          <h2 className="text-3xl font-bold">Courses</h2>
-          <p className="mt-2 text-lg">Manage courses information</p>
+        <div>
+          <h2 className="text-3xl font-bold text-slate-700">Courses</h2>
+          <p className="mt-1 text-lg text-slate-500">Manage courses information</p>
         </div>
         <button
           onClick={() => {
@@ -183,13 +183,13 @@ export default function CourseManager() {
                           setEditing(c);
                           setModalOpen(true);
                         }}
-                        className="rounded px-1 py-1 text-slate-600 transition hover:bg-slate-100"
+                        className="rounded px-1 py-1 text-teal-400 transition hover:text-teal-500"
                       >
                         <SquarePen strokeWidth={2} className="size-5" /> 
                       </button>
                       <button
                         onClick={() => handleDelete(c)}
-                        className="rounded px-1 py-1 text-slate-600 transition hover:bg-slate-100"
+                        className="rounded px-1 py-1 text-rose-400 transition hover:text-rose-500"
                       >
                         <Trash strokeWidth={2} className="size-5" />
                       </button>
