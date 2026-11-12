@@ -5,6 +5,7 @@ import Modal, { Field, inputClass } from "@/components/Modal";
 import { request, jsonOptions } from "@/lib/request";
 import {ChartColumn,Trophy,Goal} from "lucide-react";
 import { SquarePen,Trash } from "lucide-react";
+import ConfirmModal from "./ConfirmModal";
 
 const PASS_PERCENT = 40;
 
@@ -97,6 +98,8 @@ export default function MarkManager() {
   const [message, setMessage] = useState("");
   const [modalOpen, setModalOpen] = useState(false);
   const [editing, setEditing] = useState(null);
+  const [deleteTarget, setDeleteTarget] = useState(null);
+  const [deleting, setDeleting] = useState(false); 
 
   async function load() {
     try {
@@ -120,14 +123,24 @@ export default function MarkManager() {
     setTimeout(() => setMessage(""), 3000);
   }
 
-  async function handleDelete(mark) {
-    if (!confirm("Delete this marks record?")) return;
+  // Delete
+  function handleDelete(mark) {
+    setDeleteTarget(mark); // open the modal
+  }
+
+  async function confirmDelete() {
+    setDeleting(true);
     try {
-      await request(`/api/marks/${mark._id}`, { method: "DELETE" });
+      const res = await fetch(`/api/marks/${deleteTarget._id}`, { method: "DELETE" });
+      const json = await res.json();
+      if (!json.success) throw new Error(json.error);
       flash("Marks deleted");
-      load();
+      await load();
     } catch (err) {
-      setError(err.message);
+      setError(err.message || "Failed to delete marks");
+    } finally {
+      setDeleting(false);
+      setDeleteTarget(null);
     }
   }
 
@@ -142,6 +155,7 @@ export default function MarkManager() {
 
   return (
     <div>
+
       <div className="flex items-start justify-between gap-4">
         <div>
           <h2 className="text-3xl font-bold text-slate-700">Marks</h2>
@@ -248,6 +262,16 @@ export default function MarkManager() {
           }}
         />
       )}
+
+      {deleteTarget && (
+        <ConfirmModal
+          title={`Are you sure you want to delete ${deleteTarget.name}?`}
+          loading={deleting}
+          onConfirm={confirmDelete}
+          onCancel={() => setDeleteTarget(null)}
+        />
+      )}
+
     </div>
   );
 };

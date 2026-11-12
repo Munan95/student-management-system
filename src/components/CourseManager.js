@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import Modal, { Field, inputClass } from "@/components/Modal";
 import { request, jsonOptions } from "@/lib/request";
 import { SquarePen,Trash } from "lucide-react";
+import ConfirmModal from "./ConfirmModal";
 
 const EMPTY = { name: "", code: "", instructor: "", duration: "4 Years", fees: "" };
 
@@ -77,6 +78,8 @@ export default function CourseManager() {
   const [message, setMessage] = useState("");
   const [modalOpen, setModalOpen] = useState(false);
   const [editing, setEditing] = useState(null);
+  const [deleteTarget, setDeleteTarget] = useState(null);
+  const [deleting, setDeleting] = useState(false); 
 
   async function load() {
     try {
@@ -98,14 +101,24 @@ export default function CourseManager() {
     setTimeout(() => setMessage(""), 3000);
   }
 
-  async function handleDelete(course) {
-    if (!confirm(`Delete course "${course.name}"?`)) return;
+  // Delete
+  function handleDelete(courses) {
+    setDeleteTarget(courses); // open the modal
+  }
+
+  async function confirmDelete() {
+    setDeleting(true);
     try {
-      await request(`/api/courses/${course._id}`, { method: "DELETE" });
-      flash("Course deleted");
-      load();
+      const res = await fetch(`/api/courses/${deleteTarget._id}`, { method: "DELETE" });
+      const json = await res.json();
+      if (!json.success) throw new Error(json.error);
+      flash("Courses deleted");
+      await load();
     } catch (err) {
-      setError(err.message);
+      setError(err.message || "Failed to delete courses");
+    } finally {
+      setDeleting(false);
+      setDeleteTarget(null);
     }
   }
 
@@ -114,6 +127,7 @@ export default function CourseManager() {
 
   return (
     <div>
+
       <div className="flex items-start justify-between gap-4">
         <div>
           <h2 className="text-3xl font-bold text-slate-700">Courses</h2>
@@ -213,6 +227,16 @@ export default function CourseManager() {
           }}
         />
       )}
+
+      {deleteTarget && (
+        <ConfirmModal
+          title={`Are you sure you want to delete ${deleteTarget.name}?`}
+          loading={deleting}
+          onConfirm={confirmDelete}
+          onCancel={() => setDeleteTarget(null)}
+        />
+      )}
+
     </div>
   );
 };
