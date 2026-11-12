@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import Modal, { Field, inputClass } from "@/components/Modal";
 import { request, jsonOptions } from "@/lib/request";
+import { SquarePen,Trash } from "lucide-react";
 
 const EMPTY = { name: "", code: "", instructor: "", duration: "4 Years", fees: "" };
 
@@ -108,95 +109,97 @@ export default function CourseManager() {
     }
   }
 
-  const th = "px-4 py-5 text-left text-sm font-normal uppercase";
-  const td = "px-4 py-5 text-sm";
+  const th = "px-4 py-5 text-left text-sm text-slate-950 font-normal uppercase";
+  const td = "px-4 py-5 text-sm text-slate-700";
 
   return (
     <div>
       <div className="flex items-start justify-between gap-4">
-        <div>
+        <div className="text-slate-700">
           <h2 className="text-3xl font-bold">Courses</h2>
-          <p className="mt-1 text-2xl">Manage courses information</p>
+          <p className="mt-2 text-lg">Manage courses information</p>
         </div>
         <button
           onClick={() => {
             setEditing(null);
             setModalOpen(true);
           }}
-          className="rounded-md bg-blue-600 px-8 py-3 text-sm font-semibold text-white transition hover:bg-blue-700"
+          className="rounded-md bg-teal-600 px-6 py-3 text-sm font-semibold text-white transition hover:bg-teal-700"
         >
           Add Course
         </button>
       </div>
 
       {message && (
-        <div className="mt-5 rounded-md border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm text-emerald-700">
+        <div className="mt-5 rounded-md border border-teal-200 bg-teal-50 px-4 py-3 text-sm text-teal-700">
           {message}
         </div>
       )}
       {error && (
-        <div className="mt-5 rounded-md border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
+        <div className="mt-5 rounded-md border border-rose-200 bg-red-50 px-4 py-3 text-sm text-rose-700">
           {error}
         </div>
       )}
 
-      <div className="mt-6 overflow-x-auto border border-slate-800 bg-white shadow-md">
-        <table className="min-w-full divide-y divide-slate-800">
-          <thead>
-            <tr>
-              <th className={th}>Course Name</th>
-              <th className={th}>Code</th>
-              <th className={th}>Instructor</th>
-              <th className={th}>Students</th>
-              <th className={th}>Duration</th>
-              <th className={th}>Fees</th>
-              <th className={`${th} text-right`}>Actions</th>
-            </tr>
-          </thead>
-          <tbody className="divide-y divide-slate-800">
-            {loading ? (
+      <div className="mt-6 p-6 bg-white rounded-md shadow-md">
+        <div className="overflow-x-auto border border-slate-500">
+          <table className="min-w-full divide-y divide-slate-500">
+            <thead>
               <tr>
-                <td colSpan={7} className="px-4 py-10 text-center text-sm text-slate-500">
-                  Loading courses...
-                </td>
+                <th className={th}>Course Name</th>
+                <th className={th}>Code</th>
+                <th className={th}>Instructor</th>
+                <th className={th}>Students</th>
+                <th className={th}>Duration</th>
+                <th className={th}>Fees</th>
+                <th className={`${th} text-right`}>Actions</th>
               </tr>
-            ) : courses.length === 0 ? (
-              <tr>
-                <td colSpan={7} className="px-4 py-10 text-center text-sm text-slate-500">
-                  No courses yet. Click “Add Course” to create one.
-                </td>
-              </tr>
-            ) : (
-              courses.map((c) => (
-                <tr key={c._id}>
-                  <td className={td}>{c.name}</td>
-                  <td className={td}>{c.code}</td>
-                  <td className={td}>{c.instructor}</td>
-                  <td className={td}>{c.students}</td>
-                  <td className={td}>{c.duration}</td>
-                  <td className={td}>{Number(c.fees).toLocaleString("en-IN")}</td>
-                  <td className={`${td} whitespace-nowrap text-right`}>
-                    <button
-                      onClick={() => {
-                        setEditing(c);
-                        setModalOpen(true);
-                      }}
-                      className="mr-2 rounded bg-blue-600 px-3 py-1 text-xs font-medium text-white hover:bg-blue-700"
-                    >
-                      Edit
-                    </button>
-                    <button
-                      onClick={() => handleDelete(c)}
-                      className="rounded bg-red-400 px-3 py-1 text-xs font-medium text-white hover:bg-red-500"
-                    >
-                      Delete
-                    </button>
+            </thead>
+            <tbody className="divide-y divide-slate-500">
+              {loading ? (
+                <tr>
+                  <td colSpan={7} className="px-4 py-10 text-center text-sm text-slate-500">
+                    Loading courses...
                   </td>
                 </tr>
-              ))
-            )}
-          </tbody>
-        </table>
+              ) : courses.length === 0 ? (
+                <tr>
+                  <td colSpan={7} className="px-4 py-10 text-center text-sm text-slate-500">
+                    No courses yet. Click “Add Course” to create one.
+                  </td>
+                </tr>
+              ) : (
+                courses.map((c) => (
+                  <tr key={c._id}>
+                    <td className={td}>{c.name}</td>
+                    <td className={td}>{c.code}</td>
+                    <td className={td}>{c.instructor}</td>
+                    <td className={td}>{c.students}</td>
+                    <td className={td}>{c.duration}</td>
+                    <td className={td}>{Number(c.fees).toLocaleString("en-IN")}</td>
+                    <td className={`${td} whitespace-nowrap text-right`}>
+                      <button
+                        onClick={() => {
+                          setEditing(c);
+                          setModalOpen(true);
+                        }}
+                        className="rounded px-1 py-1 text-slate-600 transition hover:bg-slate-100"
+                      >
+                        <SquarePen strokeWidth={2} className="size-5" />
+                      </button>
+                      <button
+                        onClick={() => handleDelete(c)}
+                        className="rounded px-1 py-1 text-slate-600 transition hover:bg-slate-100"
+                      >
+                        <Trash strokeWidth={2} className="size-5" />
+                      </button>
+                    </td>
+                  </tr>
+                ))
+              )}
+            </tbody>
+          </table>
+        </div>
       </div>
 
       {modalOpen && (
