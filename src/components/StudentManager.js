@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import StudentCard from "./StudentCard";
 import StudentTable from "./StudentTable";
 import StudentModal from "./StudentModal";
+import ConfirmModal from "./ConfirmModal";
 
 export default function StudentManager() {
   const [students, setStudents] = useState([]);
@@ -14,7 +15,9 @@ export default function StudentManager() {
   const [saving, setSaving] = useState(false);
   const [pageError, setPageError] = useState("");
   const [modalError, setModalError] = useState("");
-  const [message, setMessage] = useState(""); 
+  const [message, setMessage] = useState("");
+  const [deleteTarget, setDeleteTarget] = useState(null);
+  const [deleting, setDeleting] = useState(false); 
 
   async function loadStudents() {
     try {
@@ -80,21 +83,30 @@ export default function StudentManager() {
     }
   }
 
-  async function handleDelete(student) {
-    if (!confirm(`Delete ${student.name}? This cannot be undone.`)) return;
-    try {
-      const res = await fetch(`/api/students/${student._id}`, { method: "DELETE" });
-      const json = await res.json();
-      if (!json.success) throw new Error(json.error);
-      flash("Student deleted");
-      await loadStudents();
-    } catch (err) {
-      setPageError(err.message || "Failed to delete student");
-    }
+// Delete
+function handleDelete(student) {
+  setDeleteTarget(student); // open the modal
+}
+
+async function confirmDelete() {
+  setDeleting(true);
+  try {
+    const res = await fetch(`/api/students/${deleteTarget._id}`, { method: "DELETE" });
+    const json = await res.json();
+    if (!json.success) throw new Error(json.error);
+    flash("Student deleted");
+    await loadStudents();
+  } catch (err) {
+    setPageError(err.message || "Failed to delete student");
+  } finally {
+    setDeleting(false);
+    setDeleteTarget(null);
   }
+}
 
   return (
     <div>
+      
       <div className="flex flex-wrap items-start justify-between gap-4">
         <div>
           <h2 className="text-3xl font-bold text-slate-700">Students</h2>
@@ -164,6 +176,16 @@ export default function StudentManager() {
           onClose={closeModal}
         />
       )}
+
+      {deleteTarget && (
+        <ConfirmModal
+          title={`Are you sure you want to delete ${deleteTarget.name}?`}
+          loading={deleting}
+          onConfirm={confirmDelete}
+          onCancel={() => setDeleteTarget(null)}
+        />
+      )}
+
     </div>
   );
 };
