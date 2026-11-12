@@ -41,8 +41,8 @@ function StatCard({ label, value, icon, color }) {
   const Icon = icon;
   return (
     <div className="flex items-center gap-4 rounded-md bg-white p-4 shadow-md ring-1 ring-slate-100">
-      <div className={`flex h-14 w-14 items-center justify-center rounded-md text-xl ${color}`}>
-        <Icon strokeWidth={2} className="size-7" />
+      <div className={`flex h-13 w-13 items-center justify-center rounded-md text-xl ${color}`}>
+        <Icon strokeWidth={2} className="size-7 text-white" />
       </div>
       <div>
         <p className="text-lg text-slate-700">{label}</p>
@@ -76,8 +76,8 @@ async function DashboardContent() {
   return (
     <>
       <div className="mt-6 grid gap-6 md:grid-cols-2">
-        <StatCard label="Total Students" value={data.totalStudents} icon={GraduationCap} color="bg-teal-500" />
-        <StatCard label="Total Courses" value={data.totalCourses} icon={List} color="bg-teal-500" />
+        <StatCard label="Total Students" value={data.totalStudents} icon={GraduationCap} color="bg-teal-600" />
+        <StatCard label="Total Courses" value={data.totalCourses} icon={List} color="bg-teal-600" />
       </div>
 
       <div className="mt-6 grid gap-6 lg:grid-cols-2">
