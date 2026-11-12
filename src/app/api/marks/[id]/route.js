@@ -6,8 +6,9 @@ import { badRequest, errorResponse, invalidId, isValidId, notFound } from "@/lib
 
 // UPDATE
 export async function PUT(request, { params }) {
+  const { id } = await params;
   try {
-    if (!isValidId(params.id)) return invalidId();
+    if (!isValidId(id)) return invalidId();
     await connectDB();
     const { student, subject, exam, score, total } = await request.json();
     if (!isValidId(student) || !(await Student.exists({ _id: student }))) {
@@ -18,7 +19,7 @@ export async function PUT(request, { params }) {
     }
     const update = { student, subject, score, total };
     if (exam !== undefined) update.exam = exam;
-    const mark = await Mark.findByIdAndUpdate(params.id, update, {
+    const mark = await Mark.findByIdAndUpdate(id, update, {
       new: true,
       runValidators: true,
     });
@@ -31,10 +32,11 @@ export async function PUT(request, { params }) {
 
 // DELETE
 export async function DELETE(_request, { params }) {
+  const { id } = await params;
   try {
-    if (!isValidId(params.id)) return invalidId();
+    if (!isValidId(id)) return invalidId();
     await connectDB();
-    const mark = await Mark.findByIdAndDelete(params.id);
+    const mark = await Mark.findByIdAndDelete(id);
     if (!mark) return notFound("Mark");
     return NextResponse.json({ success: true, data: {} });
   } catch (error) {
