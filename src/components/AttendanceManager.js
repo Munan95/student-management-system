@@ -3,6 +3,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { request, jsonOptions } from "@/lib/request";
 import { matchesCourse } from "@/lib/courseMatch";
+import { GraduationCap,Check,X } from "lucide-react";
 
 function today() {
   const d = new Date();
@@ -11,10 +12,11 @@ function today() {
 }
 
 function StatCard({ label, value, icon, color }) {
+  const Icon = icon;
   return (
     <div className="flex items-center gap-4 rounded-md bg-white p-4 shadow-md ring-1 ring-slate-100">
       <div className={`flex h-12 w-12 items-center justify-center rounded-md text-xl text-white ${color}`}>
-        {icon}
+        <Icon strokeWidth={2} className="size-7" />
       </div>
       <div>
         <p className="text-xs text-slate-700">{label}</p>
@@ -105,25 +107,25 @@ export default function AttendanceManager() {
 
   return (
     <div>
-      <h2 className="text-3xl font-bold">Attendence</h2>
-      <p className="mt-1 text-2xl">Mark student attendence by course</p>
+      <h2 className="text-3xl font-bold text-slate-700">Attendence</h2>
+      <p className="mt-2 text-lg text-slate-700">Mark student attendence by course</p>
 
       <div className="mt-6 flex flex-wrap items-end gap-6 rounded-md bg-white p-5 shadow-md ring-1 ring-slate-100">
         <div>
-          <label className="block text-xl">Select Date</label>
+          <label className="block text-xl text-slate-700">Select Date</label>
           <input
             type="date"
             value={date}
             onChange={(e) => setDate(e.target.value)}
-            className="mt-2 rounded-md border border-slate-400 px-3 py-2 text-sm outline-none focus:border-blue-500"
+            className="mt-2 rounded-md border border-slate-400 px-3 py-2 text-sm outline-none focus:border-teal-500"
           />
         </div>
         <div>
-          <label className="block text-xl">Select Course</label>
+          <label className="block text-xl text-slate-700">Select Course</label>
           <select
             value={courseName}
             onChange={(e) => setCourseName(e.target.value)}
-            className="mt-2 w-56 rounded-md border border-slate-400 px-3 py-2 text-sm outline-none focus:border-blue-500"
+            className="mt-2 w-56 rounded-md border border-slate-400 px-3 py-2 text-sm outline-none focus:border-teal-500"
           >
             <option value="all">All Courses</option>
             {courses.map((c) => (
@@ -136,16 +138,16 @@ export default function AttendanceManager() {
         <button
           onClick={save}
           disabled={saving || !date || visible.length === 0}
-          className="min-w-50 flex-1 rounded-md bg-blue-600 px-6 py-2.5 text-sm font-semibold text-white transition hover:bg-blue-700 disabled:cursor-not-allowed disabled:opacity-60"
+          className="min-w-50 flex-1 rounded-md bg-teal-600 px-6 py-2.5 text-sm font-semibold text-white transition hover:bg-teal-700 disabled:cursor-not-allowed disabled:opacity-60"
         >
           {saving ? "Saving..." : "Save Attendence"}
         </button>
       </div>
 
       <div className="mt-6 grid gap-6 md:grid-cols-3">
-        <StatCard label="Total Students" value={visible.length} icon="👥" color="bg-blue-600" />
-        <StatCard label="Present" value={presentCount} icon="✔" color="bg-green-500" />
-        <StatCard label="Absent" value={absentCount} icon="✖" color="bg-red-400" />
+        <StatCard label="Total Students" value={visible.length} icon={GraduationCap} color="bg-teal-600" />
+        <StatCard label="Present" value={presentCount} icon={Check} color="bg-green-500" />
+        <StatCard label="Absent" value={absentCount} icon={X} color="bg-rose-400" />
       </div>
 
       {message && (
@@ -154,13 +156,13 @@ export default function AttendanceManager() {
         </div>
       )}
       {error && (
-        <div className="mt-5 rounded-md border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
+        <div className="mt-5 rounded-md border border-rose-200 bg-rose-50 px-4 py-3 text-sm text-rose-700">
           {error}
         </div>
       )}
 
       <section className="mt-6 rounded-md bg-white p-4 shadow-md ring-1 ring-slate-100">
-        <h3 className="mb-3 text-base font-bold">Student Attendence</h3>
+        <h3 className="mb-3 text-base text-slate-700 font-bold">Student Attendence</h3>
         {loading ? (
           <p className="py-8 text-center text-sm text-slate-500">Loading students...</p>
         ) : visible.length === 0 ? (
@@ -168,20 +170,20 @@ export default function AttendanceManager() {
             No students found for this course.
           </p>
         ) : (
-          <div className="border-t border-slate-800">
+          <div className="border-t border-slate-600">
             {visible.map((s) => {
               const status = statusOf(s._id);
               return (
                 <div
                   key={s._id}
-                  className="flex items-center justify-between border-b border-slate-800 px-4 py-3"
+                  className="flex items-center justify-between border-b border-slate-600 px-4 py-3"
                 >
                   <div className="flex items-center gap-3">
-                    <span className="flex h-7 w-7 items-center justify-center rounded-full bg-blue-600 text-xs font-semibold text-white">
+                    <span className="flex h-7 w-7 items-center justify-center rounded-full bg-teal-600 text-xs font-semibold text-white">
                       {s.name.charAt(0).toUpperCase()}
                     </span>
                     <div>
-                      <p className="text-xs font-semibold">{s.name}</p>
+                      <p className="text-xs font-semibold text-slate-700">{s.name}</p>
                       <p className="text-[11px] text-slate-700">{s.department}</p>
                     </div>
                   </div>
@@ -200,7 +202,7 @@ export default function AttendanceManager() {
                       onClick={() => setStatus(s._id, "Absent")}
                       className={`w-16 rounded py-1 text-[11px] font-semibold transition ${
                         status === "Absent"
-                          ? "bg-red-400 text-white"
+                          ? "bg-rose-400 text-white"
                           : "bg-slate-300 text-slate-800 hover:bg-slate-400"
                       }`}
                     >
