@@ -185,7 +185,7 @@ export default function CourseManager() {
                         }}
                         className="rounded px-1 py-1 text-slate-600 transition hover:bg-slate-100"
                       >
-                        <SquarePen strokeWidth={2} className="size-5" />
+                        <SquarePen strokeWidth={2} className="size-5" /> 
                       </button>
                       <button
                         onClick={() => handleDelete(c)}

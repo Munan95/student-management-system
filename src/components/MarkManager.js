@@ -3,6 +3,8 @@
 import { useEffect, useState } from "react";
 import Modal, { Field, inputClass } from "@/components/Modal";
 import { request, jsonOptions } from "@/lib/request";
+import {ChartColumn,Trophy,Goal} from "lucide-react";
+import { SquarePen,Trash } from "lucide-react";
 
 const PASS_PERCENT = 40;
 
@@ -73,10 +75,11 @@ function MarkModal({ initial, students, onClose, onSaved }) {
 }
 
 function StatCard({ label, value, icon, color }) {
+  const Icon = icon;
   return (
     <div className="flex items-center gap-4 rounded-md bg-white p-4 shadow-md ring-1 ring-slate-100">
       <div className={`flex h-12 w-12 items-center justify-center rounded-md text-xl ${color}`}>
-        {icon}
+        <Icon strokeWidth={2} className="size-7 text-white" />
       </div>
       <div>
         <p className="text-xs text-slate-700">{label}</p>
@@ -141,24 +144,24 @@ export default function MarkManager() {
     <div>
       <div className="flex items-start justify-between gap-4">
         <div>
-          <h2 className="text-3xl font-bold">Marks</h2>
-          <p className="mt-1 text-2xl">Manage student marks and grades</p>
+          <h2 className="text-3xl font-bold text-slate-700">Marks</h2>
+          <p className="mt-1 text-lg text-slate-700">Manage student marks and grades</p>
         </div>
         <button
           onClick={() => {
             setEditing(null);
             setModalOpen(true);
           }}
-          className="rounded-md bg-blue-600 px-10 py-2 text-sm font-semibold text-white transition hover:bg-blue-700"
+          className="rounded-md bg-teal-600 px-10 py-2 text-sm font-semibold text-white transition hover:bg-teal-700"
         >
           Add Marks
         </button>
       </div>
 
       <div className="mt-6 grid gap-6 md:grid-cols-3">
-        <StatCard label="Total Records" value={marks.length} icon="📊" color="bg-blue-600" />
-        <StatCard label="Highest Marks" value={highest} icon="🏆" color="bg-yellow-400" />
-        <StatCard label="Pass Rate" value={`${passRate.toFixed(1)}%`} icon="🎯" color="bg-purple-500" />
+        <StatCard label="Total Records" value={marks.length} icon={ChartColumn} color="bg-teal-600" />
+        <StatCard label="Highest Marks" value={highest} icon={Trophy} color="bg-teal-600" />
+        <StatCard label="Pass Rate" value={`${passRate.toFixed(1)}%`} icon={Goal} color="bg-teal-600" />
       </div>
 
       {message && (
@@ -172,63 +175,65 @@ export default function MarkManager() {
         </div>
       )}
 
-      <div className="mt-6 overflow-x-auto border border-slate-800 bg-white shadow-md">
-        <table className="min-w-full divide-y divide-slate-800">
-          <thead>
-            <tr>
-              <th className={th}>Student Name</th>
-              <th className={th}>Course</th>
-              <th className={th}>Subject</th>
-              <th className={th}>Marks</th>
-              <th className={th}>Max Marks</th>
-              <th className={th}>Percentage</th>
-              <th className={`${th} text-right`}>Actions</th>
-            </tr>
-          </thead>
-          <tbody className="divide-y divide-slate-800">
-            {loading ? (
+      <div className="bg-white rounded-md shadow-md mt-6 p-6">
+        <div className="overflow-x-auto border border-slate-600">
+          <table className="min-w-full divide-y divide-slate-600">
+            <thead>
               <tr>
-                <td colSpan={7} className="px-4 py-10 text-center text-sm text-slate-500">
-                  Loading marks...
-                </td>
+                <th className={th}>Student Name</th>
+                <th className={th}>Course</th>
+                <th className={th}>Subject</th>
+                <th className={th}>Marks</th>
+                <th className={th}>Max Marks</th>
+                <th className={th}>Percentage</th>
+                <th className={`${th} text-right`}>Actions</th>
               </tr>
-            ) : marks.length === 0 ? (
-              <tr>
-                <td colSpan={7} className="px-4 py-10 text-center text-sm text-slate-500">
-                  No marks yet. Click “Add Marks” to create one.
-                </td>
-              </tr>
-            ) : (
-              marks.map((m) => (
-                <tr key={m._id}>
-                  <td className={td}>{m.student?.name || "Unknown student"}</td>
-                  <td className={td}>{m.student?.department || "-"}</td>
-                  <td className={td}>{m.subject}</td>
-                  <td className={td}>{m.score}</td>
-                  <td className={td}>{m.total}</td>
-                  <td className={td}>{pct(m).toFixed(1)}%</td>
-                  <td className={`${td} whitespace-nowrap text-right`}>
-                    <button
-                      onClick={() => {
-                        setEditing(m);
-                        setModalOpen(true);
-                      }}
-                      className="mr-2 rounded bg-blue-600 px-3 py-1 text-xs font-medium text-white hover:bg-blue-700"
-                    >
-                      Edit
-                    </button>
-                    <button
-                      onClick={() => handleDelete(m)}
-                      className="rounded bg-red-400 px-3 py-1 text-xs font-medium text-white hover:bg-red-500"
-                    >
-                      Delete
-                    </button>
+            </thead>
+            <tbody className="divide-y divide-slate-600">
+              {loading ? (
+                <tr>
+                  <td colSpan={7} className="px-4 py-10 text-center text-sm text-slate-500">
+                    Loading marks...
                   </td>
                 </tr>
-              ))
-            )}
-          </tbody>
-        </table>
+              ) : marks.length === 0 ? (
+                <tr>
+                  <td colSpan={7} className="px-4 py-10 text-center text-sm text-slate-500">
+                    No marks yet. Click “Add Marks” to create one.
+                  </td>
+                </tr>
+              ) : (
+                marks.map((m) => (
+                  <tr key={m._id}>
+                    <td className={td}>{m.student?.name || "Unknown student"}</td>
+                    <td className={td}>{m.student?.department || "-"}</td>
+                    <td className={td}>{m.subject}</td>
+                    <td className={td}>{m.score}</td>
+                    <td className={td}>{m.total}</td>
+                    <td className={td}>{pct(m).toFixed(1)}%</td>
+                    <td className={`${td} whitespace-nowrap text-right`}>
+                      <button
+                        onClick={() => {
+                          setEditing(m);
+                          setModalOpen(true);
+                        }}
+                        className="rounded px-1 py-1 text-teal-400 transition hover:text-teal-500"
+                      >
+                        <SquarePen strokeWidth={2} className="size-5" /> 
+                      </button>
+                      <button
+                        onClick={() => handleDelete(m)}
+                        className="rounded px-1 py-1 text-rose-400 transition hover:text-rose-500"
+                      >
+                        <Trash strokeWidth={2} className="size-5" />
+                      </button>
+                    </td>
+                  </tr>
+                ))
+              )}
+            </tbody>
+          </table>
+        </div>
       </div>
 
       {modalOpen && (
