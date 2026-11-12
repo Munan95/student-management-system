@@ -108,7 +108,7 @@ export default function AttendanceManager() {
   return (
     <div>
       <h2 className="text-3xl font-bold text-slate-700">Attendence</h2>
-      <p className="mt-2 text-lg text-slate-700">Mark student attendence by course</p>
+      <p className="mt-1 text-lg text-slate-500">Mark student attendence by course</p>
 
       <div className="mt-6 flex flex-wrap items-end gap-6 rounded-md bg-white p-5 shadow-md ring-1 ring-slate-100">
         <div>
@@ -146,7 +146,7 @@ export default function AttendanceManager() {
 
       <div className="mt-6 grid gap-6 md:grid-cols-3">
         <StatCard label="Total Students" value={visible.length} icon={GraduationCap} color="bg-teal-600" />
-        <StatCard label="Present" value={presentCount} icon={Check} color="bg-green-500" />
+        <StatCard label="Present" value={presentCount} icon={Check} color="bg-teal-500" />
         <StatCard label="Absent" value={absentCount} icon={X} color="bg-rose-400" />
       </div>
 
@@ -190,23 +190,23 @@ export default function AttendanceManager() {
                   <div className="flex gap-3">
                     <button
                       onClick={() => setStatus(s._id, "Present")}
-                      className={`w-16 rounded py-1 text-[11px] font-semibold transition ${
+                      className={`rounded px-1 py-1 text-slate-600 transition ${
                         status === "Present"
-                          ? "bg-green-500 text-white"
+                          ? "bg-teal-500 text-white"
                           : "bg-slate-300 text-slate-800 hover:bg-slate-400"
                       }`}
                     >
-                      Present
+                      <Check strokeWidth={2} className="size-5" />
                     </button>
                     <button
                       onClick={() => setStatus(s._id, "Absent")}
-                      className={`w-16 rounded py-1 text-[11px] font-semibold transition ${
+                      className={`rounded px-1 py-1 text-slate-600 transition ${
                         status === "Absent"
                           ? "bg-rose-400 text-white"
                           : "bg-slate-300 text-slate-800 hover:bg-slate-400"
                       }`}
                     >
-                      Absent
+                      <X strokeWidth={2} className="size-5" />
                     </button>
                   </div>
                 </div>
