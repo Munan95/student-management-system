@@ -5,12 +5,13 @@ import { errorResponse, invalidId, isValidId, notFound } from "@/lib/api";
 
 // UPDATE
 export async function PUT(request, { params }) {
+  const { id } = await params;
   try {
-    if (!isValidId(params.id)) return invalidId();
+    if (!isValidId(id)) return invalidId();
     await connectDB();
     const { name, code, instructor, duration, fees } = await request.json();
     const course = await Course.findByIdAndUpdate(
-      params.id,
+      id,
       { name, code, instructor, duration, fees },
       { new: true, runValidators: true }
     );
@@ -23,10 +24,11 @@ export async function PUT(request, { params }) {
 
 // DELETE
 export async function DELETE(_request, { params }) {
+  const { id } = await params;
   try {
-    if (!isValidId(params.id)) return invalidId();
+    if (!isValidId(id)) return invalidId();
     await connectDB();
-    const course = await Course.findByIdAndDelete(params.id);
+    const course = await Course.findByIdAndDelete(id);
     if (!course) return notFound("Course");
     return NextResponse.json({ success: true, data: {} });
   } catch (error) {
