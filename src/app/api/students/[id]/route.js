@@ -28,10 +28,11 @@ function invalidId() {
 
 // READ: get one student
 export async function GET(_request, { params }) {
+  const { id } = await params;
   try {
-    if (!mongoose.isValidObjectId(params.id)) return invalidId();
+    if (!mongoose.isValidObjectId(id)) return invalidId();
     await connectDB();
-    const student = await Student.findById(params.id);
+    const student = await Student.findById(id);
     if (!student) {
       return NextResponse.json({ success: false, error: "Student not found" }, { status: 404 });
     }
@@ -43,12 +44,13 @@ export async function GET(_request, { params }) {
 
 // UPDATE: edit a student
 export async function PUT(request, { params }) {
+  const { id } = await params;
   try {
-    if (!mongoose.isValidObjectId(params.id)) return invalidId();
+    if (!mongoose.isValidObjectId(id)) return invalidId(); 
     await connectDB();
     const { name, email, phone, department, roll, address, status } = await request.json();
     const student = await Student.findByIdAndUpdate(
-      params.id,
+      id,
       { name, email, phone, department, roll, address, status },
       { new: true, runValidators: true }
     );
@@ -63,10 +65,11 @@ export async function PUT(request, { params }) {
 
 // DELETE: remove a student
 export async function DELETE(_request, { params }) {
+  const { id } = await params;
   try {
-    if (!mongoose.isValidObjectId(params.id)) return invalidId();
+    if (!mongoose.isValidObjectId(id)) return invalidId();
     await connectDB();
-    const student = await Student.findByIdAndDelete(params.id);
+    const student = await Student.findByIdAndDelete(id);
     if (!student) {
       return NextResponse.json({ success: false, error: "Student not found" }, { status: 404 });
     }

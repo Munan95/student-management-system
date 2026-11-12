@@ -14,7 +14,7 @@ export default function StudentManager() {
   const [saving, setSaving] = useState(false);
   const [pageError, setPageError] = useState("");
   const [modalError, setModalError] = useState("");
-  const [message, setMessage] = useState("");
+  const [message, setMessage] = useState(""); 
 
   async function loadStudents() {
     try {
