@@ -5,6 +5,7 @@ import StudentCard from "./StudentCard";
 import StudentTable from "./StudentTable";
 import StudentModal from "./StudentModal";
 import ConfirmModal from "./ConfirmModal";
+import Pagination from "./Pagination";
 
 export default function StudentManager() {
   const [students, setStudents] = useState([]);
@@ -17,7 +18,9 @@ export default function StudentManager() {
   const [modalError, setModalError] = useState("");
   const [message, setMessage] = useState("");
   const [deleteTarget, setDeleteTarget] = useState(null);
-  const [deleting, setDeleting] = useState(false); 
+  const [deleting, setDeleting] = useState(false);
+  const [page, setPage] = useState(1);
+  const [pageSize, setPageSize] = useState(9);
 
   async function loadStudents() {
     try {
@@ -83,26 +86,33 @@ export default function StudentManager() {
     }
   }
 
-// Delete
-function handleDelete(student) {
-  setDeleteTarget(student); // open the modal
-}
-
-async function confirmDelete() {
-  setDeleting(true);
-  try {
-    const res = await fetch(`/api/students/${deleteTarget._id}`, { method: "DELETE" });
-    const json = await res.json();
-    if (!json.success) throw new Error(json.error);
-    flash("Student deleted");
-    await loadStudents();
-  } catch (err) {
-    setPageError(err.message || "Failed to delete student");
-  } finally {
-    setDeleting(false);
-    setDeleteTarget(null);
+  // Delete
+  function handleDelete(student) {
+    setDeleteTarget(student); // open the modal
   }
-}
+
+  async function confirmDelete() {
+    setDeleting(true);
+    try {
+      const res = await fetch(`/api/students/${deleteTarget._id}`, { method: "DELETE" });
+      const json = await res.json();
+      if (!json.success) throw new Error(json.error);
+      flash("Student deleted");
+      await loadStudents();
+    } catch (err) {
+      setPageError(err.message || "Failed to delete student");
+    } finally {
+      setDeleting(false);
+      setDeleteTarget(null);
+    }
+  }
+
+  const totalPages = Math.max(1, Math.ceil(students.length / pageSize));
+  const currentPage = Math.min(page, totalPages);
+  const pagedStudents = students.slice(
+    (currentPage - 1) * pageSize,
+    currentPage * pageSize
+  );
 
   return (
     <div>
@@ -157,15 +167,29 @@ async function confirmDelete() {
             No students yet. Click “Add Student” to create one.
           </p>
         ) : view === "cards" ? (
-          <div className="grid gap-6 sm:grid-cols-2">
-            {students.map((s) => (
+          <div className="grid gap-6 sm:grid-cols-3">
+            {pagedStudents.map((s) => (
               <StudentCard key={s._id} student={s} onEdit={openEdit} onDelete={handleDelete} />
             ))}
           </div>
         ) : (
-          <StudentTable students={students} onEdit={openEdit} onDelete={handleDelete} />
+          <StudentTable students={pagedStudents} onEdit={openEdit} onDelete={handleDelete} />
         )}
       </div>
+
+      {!loading && students.length > 0 && (
+        <Pagination
+          page={currentPage}
+          totalPages={totalPages}
+          totalItems={students.length}
+          pageSize={pageSize}
+          onPageChange={setPage}
+          onPageSizeChange={(n) => {
+            setPageSize(n);
+            setPage(1);
+          }}
+        />
+      )}
 
       {modalOpen && (
         <StudentModal

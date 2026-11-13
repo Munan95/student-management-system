@@ -31,7 +31,7 @@ export default function Pagination({
     <div className="mt-6 flex flex-wrap items-center justify-between gap-4">
       <div className="flex items-center gap-3 text-sm text-slate-600">
         <span>
-          Showing {from}–{to} of {totalItems}
+          Showing {from}-{to} of {totalItems}
         </span>
         <select
           value={pageSize}
@@ -39,7 +39,7 @@ export default function Pagination({
           className="rounded-md border border-slate-300 bg-white px-2 py-1.5 text-sm"
           aria-label="Students per page"
         >
-          {[6, 12, 24, 48].map((n) => (
+          {[9, 18, 27].map((n) => (
             <option key={n} value={n}>
               {n} / page
             </option>
@@ -69,7 +69,7 @@ export default function Pagination({
               onClick={() => onPageChange(p)}
               className={`${btn} ${
                 p === page
-                  ? "border-sky-600 bg-sky-600 font-medium text-white"
+                  ? "border-teal-500 bg-teal-500 font-medium text-white"
                   : "hover:bg-slate-100"
               }`}
             >
