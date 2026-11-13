@@ -172,7 +172,7 @@ async function DashboardContent() {
 
 export default function Dashboard() {
   return (
-    <main className="px-6 py-4 min-h-screen bg-slate-100">
+    <main className="px-6 py-4 bg-slate-100">
       <h2 className="text-3xl font-bold text-slate-700">Dashboard</h2>
       <p className="mt-1 text-lg text-slate-500">Welcome to the Student Management System</p>
 
