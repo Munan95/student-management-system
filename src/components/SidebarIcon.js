@@ -1,4 +1,4 @@
-export default function SidebarIcon({ className = "h-6 w-6" }) {
+export default function SidebarIcon({ className = "h-5 w-5 text-slate-600" }) {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"

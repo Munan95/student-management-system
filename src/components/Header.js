@@ -8,8 +8,8 @@ export default function Header() {
         <Image
               src="/EduDash Learning Emblem.png"
               alt="app-logo"
-              width={9}
-              height={9}
+              width={36}
+              height={36}
               priority
               className="h-9 w-9 rounded-full"
             />

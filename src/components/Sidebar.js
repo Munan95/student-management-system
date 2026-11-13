@@ -18,7 +18,7 @@ export default function Sidebar({ open,onToggleSidebar }) {
 
   return (
     <aside
-      className={`sticky top-3 m-3 h-[calc(100vh-1.5rem)] shrink-0 overflow-hidden rounded-xl border border-slate-200 bg-white shadow-md transition-all duration-300 ${open ? "w-56" : "w-18"
+      className={`sticky top-3 m-3 h-[calc(100vh-1.5rem)] shrink-0 overflow-hidden rounded-xl border border-slate-200 bg-white shadow-md transition-all duration-400 ${open ? "w-56" : "w-18"
         }`}
     >
       {/* fixed-width inner box so text doesn't wrap while the sidebar animates */}
@@ -33,7 +33,7 @@ export default function Sidebar({ open,onToggleSidebar }) {
           type="button"
           onClick={onToggleSidebar}
           aria-label={open ? "Collapse sidebar" : "Expand sidebar"}
-          className="rounded-md p-1 text-slate-700 hover:bg-slate-100"
+          className="rounded-md p-1.5 text-slate-700 hover:bg-slate-100"
         >
           <SidebarIcon />
         </button>
