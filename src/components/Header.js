@@ -2,7 +2,7 @@ import Image from "next/image";
 
 export default function Header() {
   return (
-    <header className="sticky top-0 z-50 flex h-16 w-367 items-center justify-between border-b rounded-xl m-2 border-slate-300 bg-white px-6 shadow-md">
+    <header className="sticky top-0 z-50 flex h-16 items-center justify-between border-b rounded-xl ml-2 mr-4 my-2 border-slate-300 bg-white px-6 shadow-md">
       
       <div className="flex gap-1 items-center justify-center">
         <Image
