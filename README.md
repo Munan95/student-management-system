@@ -8,7 +8,7 @@ Each student has: **Name, Email, Phone, Department**.
 
 1. Install dependencies:
    ```bash
-   npm install
+   pnpm install
    ```
 2. Make sure MongoDB is running locally, or use a MongoDB Atlas connection string.
 3. Check `.env.local`:
@@ -17,13 +17,15 @@ Each student has: **Name, Email, Phone, Department**.
    ```
 4. Start the dev server:
    ```bash
-   npm run dev
+   pnpm run dev
    ```
 5. (Optional) Load sample students, courses and marks for the dashboard:
    ```bash
-   npm run seed
+   pnpm run seed
    ```
 6. Open http://localhost:3000 (Dashboard). Students are at http://localhost:3000/students
+
+7. Website https://student-management-system-delta-dun.vercel.app/
 
 ## API
 
@@ -40,18 +42,3 @@ Each student has: **Name, Email, Phone, Department**.
 | PUT / DELETE | `/api/marks/:id`   | Update / delete marks |
 | GET `?date=YYYY-MM-DD` | `/api/attendance` | Attendence for a date |
 | POST   | `/api/attendance`    | Save attendence for a date (`{ date, records }`) |
-
-## Structure
-
-```
-app/
-  api/students/route.js        # GET all, POST
-  api/students/[id]/route.js   # GET one, PUT, DELETE
-  layout.js, page.js, globals.css
-components/
-  StudentManager.js            # state + API calls
-  StudentForm.js               # add / edit form
-  StudentTable.js              # list with Edit / Delete
-lib/mongodb.js                 # cached Mongoose connection
-models/Student.js              # Mongoose schema & model
-```
